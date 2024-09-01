@@ -17,8 +17,11 @@ class Less_Visitor {
 			return $node;
 		}
 
-		$prefixClassName = str_replace("Less"."_"."Visitor", "", __CLASS__);
-		$funcName = 'visit' . str_replace( [ $prefixClassName . 'Less_Tree_', '_' ], '', get_class( $node ) );
+		$nodeClassName = get_class( $node );
+		$nodeClassNameParts = explode("Less_Tree_", $nodeClassName);
+		$nodeType = $nodeClassNameParts[array_key_last($nodeClassNameParts)];
+
+		$funcName = 'visit' . str_replace( '_' , '', $nodeType );
 
 		if ( isset( $this->_visitFnCache[$funcName] ) ) {
 			$visitDeeper = true;
